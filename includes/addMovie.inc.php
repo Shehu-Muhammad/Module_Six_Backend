@@ -1,30 +1,78 @@
 <?php
 include_once 'dbMovies.inc.php';
-    
-    //mysqli_real_escape_string() is a function to read the inputs from the user as only text to avoid SQL injection
-    //Prepared Statement
-    
-    // $movie_name = mysqli_real_escape_string($conn,$_POST['movie_name']);
-    // $movie_rating = mysqli_real_escape_string($conn,$_POST['movie_rating']);
-    // $movie_releaseYear = mysqli_real_escape_string($conn,$_POST['movie_releaseYear']);
-    // $movie_length = mysqli_real_escape_string($conn,$_POST['movie_length']);
-    // $movie_ratingOne = mysqli_real_escape_string($conn,$_POST['movie_ratingOne']);
-    // $movie_ratingTwo = mysqli_real_escape_string($conn,$_POST['movie_ratingTwo']);
-    // $movie_ratingThree = mysqli_real_escape_string($conn,$_POST['movie_ratingThree']);
-    
-    // $sql = "INSERT INTO movies (movie_name, movie_rating, movie_releaseYear, movie_length, movie_ratingOne, movie_ratingTwo, movie_ratingThree) 
-    //             VALUES (?, ?, ?, ?, ?, ?, ?);";
-    // $stmt = mysqli_stmt_init($conn);
-    
-    // if(!mysqli_stmt_prepare($stmt, $sql)){
-    //     echo "SQL error";
-    // } else {
-    //     mysqli_stmt_bind_param($stmt, "sssssss", $movie_name, $movie_rating, $movie_releaseYear, $movie_length, $movie_ratingOne, $movie_ratingTwo, $movie_ratingThree);
-        
-    //     mysqli_stmt_execute($stmt);
-    // }
 
+    $title = mysqli_real_escape_string($conn, $_POST['title']);
+    // echo ($_POST['title']);
+    $minutes = mysqli_real_escape_string($conn, $_POST['minutes']);
+    // echo $minutes;
+    $hour = $_POST['hour'];
+    // echo $hours;
+    $seconds = $hour*60*60 + $minutes*60;  
+    $run_time = mysqli_real_escape_string($conn, $seconds);
+    // echo $run_time;
+    $rating_id = mysqli_real_escape_string($conn, $_POST['rating']);
+    // echo $rating;
+    $genre_ids = mysqli_real_escape_string($conn, implode("",$_POST['genre']));
+    // $genre = $_POST['genre'];
+    // foreach($genre as $genreName) {
+    //     echo $genreName;
+    //     echo("<br>");
+    // }
+    // echo $genre;
+    $release_year = mysqli_real_escape_string($conn, $_POST['releaseYear']);
+    // echo $release_year;
     
-    
-    header("Location: ../index.php?movieAdded=success");
+    $movie_table_sql = "INSERT INTO movies ";
+    $movie_table_sql .= "(title) ";
+    $movie_table_sql .= "VALUES (";
+    $movie_table_sql .= "'" . $title . "'";
+    $movie_table_sql .= ")";
+
+    // echo $movie_table_sql;
+    // exit();
+
+    $movieInserted = mysqli_query($conn, $movie_table_sql);
+
+    if( $movieInserted ) {
+        $lastMovieIdInserted = mysqli_insert_id($conn);
+
+        $movie_details_sql = "INSERT INTO details ";
+        $movie_details_sql .= "(movie_id, genre_ids, rating_id, release_year, run_time)";
+        $movie_details_sql .= "VALUES (";
+        $movie_details_sql .= "'" . $lastMovieIdInserted . "', ";
+        $movie_details_sql .= "'" . $genre_ids . "', ";
+        $movie_details_sql .= "'" . $rating_id . "', ";
+        $movie_details_sql .= "'" . $release_year . "', ";
+        $movie_details_sql .= "'" . $run_time . "'";
+        $movie_details_sql .= ")";
+        
+        $movieDetailsInserted = mysqli_query($conn, $movie_details_sql);
+        if( $movieDetailsInserted ) {
+            header("Location: ../index.php?movieAdded=success");
+        } else {
+            /* Displays errors */
+            echo mysqli_error($conn);
+            
+            /* If there's a connection, close the connection */
+            if($conn){ 
+                mysqli_close($conn);
+            }
+
+            /* Make sure nothing else runs */
+            exit();
+        }
+    } else {
+        /* Displays errors */
+        echo mysqli_error($conn);
+            
+        /* If there's a connection, close the connection */
+        if($conn){ 
+            mysqli_close($conn);
+        }
+
+        /* Make sure nothing else runs */
+        exit();
+    }
+
+    // echo "<pre>".var_dump($_POST)."</pre>";
 ?>

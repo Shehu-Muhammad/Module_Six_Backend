@@ -24,35 +24,35 @@
     <form action="includes/addMovie.inc.php" method="POST">
         <label>
             Title
-            <input type="text" name="" id="" placeholder="Enter a movie title"><br><br>
+            <input type="text" name="title" id="title" placeholder="Enter a movie title" required><br><br>
         </label>
         <label>
             Hour(s)
-            <input type="number" name="" id="" min="0" max="50" placeholder="0"><br><br>
+            <input type="number" name="hour" id="hour" min="0" max="50" placeholder="0" required><br><br>
         </label>
         <label>
             Minutes
-            <input type="number" name="" id="" min="0" max="59" placeholder="0"><br><br>
+            <input type="number" name="minutes" id="minutes" min="0" max="59" placeholder="0" required><br><br>
         </label>
         <label>
             Rating
-            <select name="" id="">
+            <select name="rating" id="rating">
+                <option value="-1" selected disabled>Please Select A Rating</option>
             <?php
                 $sql = "Select * from ratings";
                 $allRatings = mysqli_query($conn, $sql);
                 while( $currentRating = mysqli_fetch_assoc($allRatings)) {        
             ?>
-            <option value=""><?php echo( $currentRating["rating"] ); ?></option>
+            <option value="<?php echo( $currentRating["id"] ); ?>"><?php echo( $currentRating["rating"] ); ?></option>
             <?php
                 } 
             ?>
             </select><br><br>
         </label>
-        <label for="genre"></label>
-            <!-- Genre -->
+        <label for="genre">Genre</label><br><br>
 <?php
                 $sql = "Select * from genre order by name ASC";
-                $allGenres= mysqli_query($conn, $sql);
+                $allGenres = mysqli_query($conn, $sql);
                 // $currentGenreNumber = 0;
 ?>
                 <table border="1">
@@ -73,7 +73,7 @@
 ?>
                         </td>
                         <td>
-                            <input type="checkbox" name="" id="">
+                            <input type="checkbox" name="genre[]" id="genre" value="<?php echo ($currentGenre["id"].","); ?>">
                         </td>
                     </tr>
 <?php   
@@ -84,11 +84,11 @@
             <br><br>
         <label>
             Release Year
-            <select name="" id="">
+            <select name="releaseYear" id="releaseYear">
 <?php
                 for($currentYear = 2022; $currentYear >= 1905; $currentYear--) {        
 ?>
-            <option value=""><?php echo( $currentYear ); ?></option>
+            <option value="<?php echo( $currentYear ); ?>"><?php echo( $currentYear ); ?></option>
             <?php
                 } 
             ?>
