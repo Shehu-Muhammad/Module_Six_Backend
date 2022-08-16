@@ -98,18 +98,42 @@ include_once 'includes/dbMovies.inc.php';
         echo ("<br>");
         echo("Genre(s): ".$genres);
         echo("</li>");
+
+        $editMovieDetails = [];
+        $editMovieDetails['id'] = $id;
+        $editMovieDetails['title'] = $title;
+        $editMovieDetails['titleId'] = $titleId;
+        $editMovieDetails['hours'] = intDiv($seconds, 3600);
+        $editMovieDetails['minutes'] = $seconds/60%60;
+        $editMovieDetails['releaseYear'] = $releaseYear;
+        $editMovieDetails['ratingId'] = $ratingId;
+        $editMovieDetails['rating'] = $rating;
+        $editMovieDetails['genreIds'] = $genre_Ids;
         ?>
-        <a href="<?php echo("index.php?movieEditId=" . urlencode( $id )); ?>">Edit</a> 
+        <a href="<?php echo("updateMovie.php?editMovieDetails=" . urlencode( $editMovieDetails )); ?>">Edit</a> 
         <a href="<?php echo("index.php?movieDeleteId=" . urlencode( $id ). "&titleId=" . urlencode( $titleId )); ?>">Delete</a><br><br>
         <?php
+        // $editMovieDetails = [];
+        // $editMovieDetails['id'] = $id;
+        // $editMovieDetails['title'] = $title;
+        // $editMovieDetails['titleId'] = $titleId;
+        // $editMovieDetails['hours'] = intDiv($seconds, 3600);
+        // $editMovieDetails['minutes'] = $seconds/60%60;
+        // $editMovieDetails['releaseYear'] = $releaseYear;
+        // $editMovieDetails['ratingId'] = $ratingId;
+        // $editMovieDetails['rating'] = $rating;
+        // $editMovieDetails['genreIds'] = $genre_Ids;
+    echo("<pre>");
+    var_dump($editMovieDetails);
+    echo("</pre>");
+    
     }
+    // exit();
     echo("</ol>");
     // exit();
 ?>
-
-<!-- Delete from database -->
 <?php
-
+// Delete from database
 if( isset( $_GET['movieDeleteId']) && isset( $_GET['titleId']) ) {
     $movieDeletedId = mysqli_real_escape_string($conn, $_GET['movieDeleteId']);
     $titleId = mysqli_real_escape_string($conn, $_GET['titleId']);
@@ -142,9 +166,6 @@ if( isset( $_GET['movieDeleteId']) && isset( $_GET['titleId']) ) {
         exit();
     }
 }
-
 ?>
-
-                
 </body>
 </html>

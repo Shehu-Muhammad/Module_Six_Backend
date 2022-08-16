@@ -7,21 +7,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Movie Form</title>
+    <title>Edit Movie Form</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li>
-                <a href="index.php">Home</a>
-            </li>
-            <li>
-                <a href="addMovie.php">Add Movie</a>
-            </li>
-        </ul>
-    </nav>
+    <h1>Update Movie Details</h1>
+    <?php
+        if(!isset($_GET['editMovieDetails'])) {
+            header("Location: index.php");
+        } 
 
-    <form action="includes/addMovie.inc.php" method="POST">
+        echo("<pre>");
+        var_dump($editMovieDetails);
+        echo("</pre>");
+    ?>
+    <!-- includes/updateMovie.inc.php -->
+    <form action="includes/updateMovie.inc.php" method="POST">
         <label>
             Title
             <input type="text" name="title" id="title" placeholder="Enter a movie title" required><br><br>
@@ -37,13 +37,14 @@
         <label>
             Rating
             <select name="rating" id="rating">
-                <option value="-1" selected disabled>Please Select A Rating</option>
+                <option value="-1" disabled>Please Select A Rating</option>
             <?php
+                $ratingId = 2;
                 $sql = "Select * from ratings";
                 $allRatings = mysqli_query($conn, $sql);
                 while( $currentRating = mysqli_fetch_assoc($allRatings)) {        
             ?>
-            <option value="<?php echo( $currentRating["id"] ); ?>"><?php echo( $currentRating["rating"] ); ?></option>
+            <option value="<?php echo( $currentRating["id"] ); ?>" <?php  $selected = ($currentRating['id']==$ratingId) ? 'selected' : '';  echo($selected)?> ><?php echo( $currentRating["rating"] ); ?></option>
 <?php
                 } 
 ?>
@@ -53,7 +54,6 @@
 <?php
                 $sql = "Select * from genre order by name ASC";
                 $allGenres = mysqli_query($conn, $sql);
-                // $currentGenreNumber = 0;
 ?>
                 <table border="1">
 <?php
@@ -61,10 +61,6 @@
 ?>
                     <tr>
 <?php
-                        // $currentGenreNumber++;
-                        // if($currentGenreNumber % 6 == 0) {
-                        //     echo("<br>");
-                        // }
 ?>
                         <td>
 <?php
@@ -92,7 +88,7 @@
 ?>
             </select><br><br>
         </label>
-        <input type="submit" value="Add Movie">
+        <input type="submit" value="Update Movie">
     </form>
 </body>
 </html>
