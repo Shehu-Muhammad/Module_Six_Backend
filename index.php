@@ -81,7 +81,6 @@ include_once 'includes/dbMovies.inc.php';
         $sqlGetGenresList = mysqli_query($conn, $sqlGenres);
         $genres = "";
         while($result = mysqli_fetch_assoc($sqlGetGenresList)) {
-            // echo(ucfirst($result['name']." "));
             $genres .= ucfirst($result['name']." ");
         }
         // echo $genres;
@@ -99,32 +98,52 @@ include_once 'includes/dbMovies.inc.php';
         echo ("<br>");
         echo("Genre(s): ".$genres);
         echo("</li>");
-        echo ("<br>");
+        ?>
+        <a href="<?php echo("index.php?movieEditId=" . urlencode( $id )); ?>">Edit</a> 
+        <a href="<?php echo("index.php?movieDeleteId=" . urlencode( $id ). "&titleId=" . urlencode( $titleId )); ?>">Delete</a><br><br>
+        <?php
     }
     echo("</ol>");
-    exit();
+    // exit();
 ?>
+
+<!-- Delete from database -->
 <?php
-// Hard coded for now to not get errors to undefined variables
-            $title = "Dog";
-            $hours = 1;
-            $minutes = 41;
-            $releaseYear = 2022;
-            $rating = "PG-13";
-            $genres = "Comedy Drama";
+
+if( isset( $_GET['movieDeleteId']) && isset( $_GET['titleId']) ) {
+    $movieDeletedId = mysqli_real_escape_string($conn, $_GET['movieDeleteId']);
+    $titleId = mysqli_real_escape_string($conn, $_GET['titleId']);
+
+    $deleteMovieData = "DELETE FROM details ";
+    $deleteMovieData .= "WHERE id ='". $movieDeletedId . "'";
+    // echo("<p>".$deleteMovieData."</p>");
+    // exit();
+    $deleteMovieData = mysqli_query($conn, $deleteMovieData);
+
+    $deleteMovieTitle = "DELETE FROM movies ";
+    $deleteMovieTitle .= "WHERE id ='". $titleId . "'";
+    $deleteMovieTitle = mysqli_query($conn, $deleteMovieTitle);
+    // echo("<p>".$deleteMovieTitle."</p>");
+    // exit();
+
+    $movieDeletionSuccessful = $deleteMovieTitle;
+
+    if( $movieDeletionSuccessful ) {
+        // echo("Movie deletion was a success");
+        header("Location: index.php");
+        exit();
+    } else {
+        echo(mysqli_error($conn));
+        
+        if($conn) {
+            mysqli_close($conn);
+        }
+        
+        exit();
+    }
+}
+
 ?>
-    <ol>
-        <li>
-            Title: <?php echo ($title); ?><br>
-            Hour(s): <?php echo ($hours); ?><br>
-            Minute(s): <?php echo ($minutes); ?><br>
-            Release Year: <?php echo ($releaseYear); ?><br>
-            Rating: <?php echo($rating); ?><br>
-            Genre: <?php echo ($genres); ?><br>
-            <a href="<?php echo("index.php?movieEditId=" . urlencode( $currentMovie['id'] )); ?>">Edit</a> 
-            <a href="<?php echo("index.php?movieDeleteId=" . urlencode( $currentMovie['id'] )); ?>">Delete</a>
-        </li>
-    </ol>
 
                 
 </body>

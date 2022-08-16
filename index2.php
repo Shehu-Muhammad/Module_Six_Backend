@@ -91,3 +91,25 @@
 
         }
 ?>
+
+<?php
+// Hard coded for now to not get errors to undefined variables
+            $title = "Dog";
+            $hours = 1;
+            $minutes = 41;
+            $releaseYear = 2022;
+            $rating = "PG-13";
+            $genres = "Comedy Drama";
+?>
+    <ol>
+        <li>
+            Title: <?php echo ($title); ?><br>
+            Hour(s): <?php echo ($hours); ?><br>
+            Minute(s): <?php echo ($minutes); ?><br>
+            Release Year: <?php echo ($releaseYear); ?><br>
+            Rating: <?php echo($rating); ?><br>
+            Genre: <?php echo ($genres); ?><br>
+            <a href="<?php echo("index.php?movieEditId=" . urlencode( $currentMovie['id'] )); ?>">Edit</a> 
+            <a href="<?php echo("index.php?movieDeleteId=" . urlencode( $currentMovie['id'] )); ?>">Delete</a>
+        </li>
+    </ol>
