@@ -1,5 +1,8 @@
 <?php
 include_once 'dbMovies.inc.php';
+    if(!isset($_POST['id'])) {
+        header("Location: ../index.php");
+    }
 
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     // echo ($_POST['title']);
