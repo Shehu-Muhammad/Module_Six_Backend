@@ -1,11 +1,13 @@
 <?php
 include_once 'dbMovies.inc.php';
-    if(!isset($_POST['id'])) {
+    if(!isset($_GET['id'])) {
         header("Location: ../index.php");
     }
 
     $id = mysqli_real_escape_string($conn,$_GET['id']);
     $title = mysqli_real_escape_string($conn, $_POST['title']);
+    // var_dump($_POST);
+    // exit();
     $titleId = mysqli_real_escape_string($conn, $_GET['titleId']);
     $minutes = mysqli_real_escape_string($conn, $_POST['minutes']);
     $hour = $_POST['hour'];
@@ -18,7 +20,7 @@ include_once 'dbMovies.inc.php';
     $movie_table_sql = "UPDATE movies SET ";
     $movie_table_sql .= "title = '".$title."' ";
     $movie_table_sql .= "WHERE id = ";
-    $movie_table_sql .= "'".$id."'";
+    $movie_table_sql .= "'".$titleId."'";
 
     $movieInserted = mysqli_query($conn, $movie_table_sql);
 

@@ -73,17 +73,17 @@ session_start();
             $genres .= ucfirst($result['name']." ");
         }
 
-        echo("Title: ".$title);
+        echo("Title: ".htmlspecialchars($title));
         echo ("<br>");
-        echo("Hours: ".intDiv($seconds, 3600));
+        echo("Hours: ".htmlspecialchars(intDiv($seconds, 3600)));
         echo ("<br>");
-        echo("Minutes: ".$seconds/60%60);
+        echo("Minutes: ".htmlspecialchars($seconds/60%60));
         echo ("<br>");
-        echo("Release Year: ".$releaseYear);
+        echo("Release Year: ".htmlspecialchars($releaseYear));
         echo ("<br>");
-        echo("Rating: ".$rating);
+        echo("Rating: ".htmlspecialchars($rating));
         echo ("<br>");
-        echo("Genre(s): ".$genres);
+        echo("Genre(s): ".htmlspecialchars($genres));
         echo("</li>");
         
         $editMovieDetails[$id] = [];
