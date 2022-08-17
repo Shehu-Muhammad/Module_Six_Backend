@@ -1,5 +1,6 @@
 <?php 
 include_once 'includes/dbMovies.inc.php';
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,19 +22,11 @@ include_once 'includes/dbMovies.inc.php';
         </ul>
     </nav>
 <?php
-    // Query - SQL statement
-    // $sql = "SELECT * FROM ";
-    // mysqli_query($conn, $sql);
-    // mysqli_fetch_assoc( $ )
     $sql = "SELECT * FROM details";
-    // echo($sql);
     $query = mysqli_query($conn, $sql);
-    // echo("<pre>");
-    // var_dump($query);
-    // echo("</pre>");
+
     echo("<ol>");
     while($currentData = mysqli_fetch_assoc($query)) {
-        // print_r ($currentData);
         echo("<li>");
         $id = $currentData['id'];
         $titleId = $currentData['movie_id'];
@@ -41,7 +34,6 @@ include_once 'includes/dbMovies.inc.php';
         $ratingId = $currentData['rating_id'];
         $releaseYear = $currentData['release_year'];
         $seconds = $currentData['run_time'];
-
 
         $movieSQL = "SELECT * FROM movies";
         $movieQuery = mysqli_query($conn, $movieSQL);
@@ -59,7 +51,6 @@ include_once 'includes/dbMovies.inc.php';
             }
         }
 
-        // $genre_Ids = $allDetails['genre_ids'];
         $genre_Ids = explode(",", $genreIds);
         $genre_Ids_string = "";
         for( $currentGenreIdIndex = 0; $currentGenreIdIndex < count( $genre_Ids ) ; $currentGenreIdIndex++  ) {
@@ -71,8 +62,6 @@ include_once 'includes/dbMovies.inc.php';
                 $genre_Ids_string .= $genre_Ids[ $currentGenreIdIndex ] . ", ";
             }
         }
-        // echo($genre_Ids_string);
-        // exit();
 
         $sqlGenres = "SELECT * from genre where id in";
         $sqlGenres .= " (";
@@ -83,8 +72,6 @@ include_once 'includes/dbMovies.inc.php';
         while($result = mysqli_fetch_assoc($sqlGetGenresList)) {
             $genres .= ucfirst($result['name']." ");
         }
-        // echo $genres;
-        // exit();
 
         echo("Title: ".$title);
         echo ("<br>");
@@ -98,39 +85,24 @@ include_once 'includes/dbMovies.inc.php';
         echo ("<br>");
         echo("Genre(s): ".$genres);
         echo("</li>");
-
-        $editMovieDetails = [];
-        $editMovieDetails['id'] = $id;
-        $editMovieDetails['title'] = $title;
-        $editMovieDetails['titleId'] = $titleId;
-        $editMovieDetails['hours'] = intDiv($seconds, 3600);
-        $editMovieDetails['minutes'] = $seconds/60%60;
-        $editMovieDetails['releaseYear'] = $releaseYear;
-        $editMovieDetails['ratingId'] = $ratingId;
-        $editMovieDetails['rating'] = $rating;
-        $editMovieDetails['genreIds'] = $genre_Ids;
+        
+        $editMovieDetails[$id] = [];
+        $editMovieDetails[$id]['id'] = $id;
+        $editMovieDetails[$id]['title'] = $title;
+        $editMovieDetails[$id]['titleId'] = $titleId;
+        $editMovieDetails[$id]['hours'] = intDiv($seconds, 3600);
+        $editMovieDetails[$id]['minutes'] = $seconds/60%60;
+        $editMovieDetails[$id]['releaseYear'] = $releaseYear;
+        $editMovieDetails[$id]['ratingId'] = $ratingId;
+        $editMovieDetails[$id]['rating'] = $rating;
+        $editMovieDetails[$id]['genreIds'] = $genre_Ids;
+        $_SESSION['editMovieDetails['.$id.']'] = $editMovieDetails[$id];
         ?>
-        <a href="<?php echo("updateMovie.php?editMovieDetails=" . urlencode( $editMovieDetails )); ?>">Edit</a> 
-        <a href="<?php echo("index.php?movieDeleteId=" . urlencode( $id ). "&titleId=" . urlencode( $titleId )); ?>">Delete</a><br><br>
-        <?php
-        // $editMovieDetails = [];
-        // $editMovieDetails['id'] = $id;
-        // $editMovieDetails['title'] = $title;
-        // $editMovieDetails['titleId'] = $titleId;
-        // $editMovieDetails['hours'] = intDiv($seconds, 3600);
-        // $editMovieDetails['minutes'] = $seconds/60%60;
-        // $editMovieDetails['releaseYear'] = $releaseYear;
-        // $editMovieDetails['ratingId'] = $ratingId;
-        // $editMovieDetails['rating'] = $rating;
-        // $editMovieDetails['genreIds'] = $genre_Ids;
-    echo("<pre>");
-    var_dump($editMovieDetails);
-    echo("</pre>");
-    
+        <a href="<?php echo("updateMovie.php?id=" . htmlspecialchars(urlencode( $id ))); ?>">Edit</a> 
+        <a href="<?php echo("index.php?movieDeleteId=" . htmlspecialchars(urlencode( $id )). "&titleId=" . htmlspecialchars(urlencode( $titleId ))); ?>">Delete</a><br><br>
+        <?php  
     }
-    // exit();
     echo("</ol>");
-    // exit();
 ?>
 <?php
 // Delete from database
@@ -139,21 +111,18 @@ if( isset( $_GET['movieDeleteId']) && isset( $_GET['titleId']) ) {
     $titleId = mysqli_real_escape_string($conn, $_GET['titleId']);
 
     $deleteMovieData = "DELETE FROM details ";
-    $deleteMovieData .= "WHERE id ='". $movieDeletedId . "'";
-    // echo("<p>".$deleteMovieData."</p>");
-    // exit();
+    $deleteMovieData .= "WHERE id ='". $movieDeletedId . "' ";
+    $deleteMovieData .= "LIMIT 1";
     $deleteMovieData = mysqli_query($conn, $deleteMovieData);
 
     $deleteMovieTitle = "DELETE FROM movies ";
-    $deleteMovieTitle .= "WHERE id ='". $titleId . "'";
+    $deleteMovieTitle .= "WHERE id ='". $titleId . "' ";
+    $deleteMovieTitle .= "LIMIT 1";
     $deleteMovieTitle = mysqli_query($conn, $deleteMovieTitle);
-    // echo("<p>".$deleteMovieTitle."</p>");
-    // exit();
 
     $movieDeletionSuccessful = $deleteMovieTitle;
 
     if( $movieDeletionSuccessful ) {
-        // echo("Movie deletion was a success");
         header("Location: index.php");
         exit();
     } else {
