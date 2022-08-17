@@ -5,34 +5,19 @@ include_once 'dbMovies.inc.php';
     }
 
     $title = mysqli_real_escape_string($conn, $_POST['title']);
-    // echo ($_POST['title']);
     $minutes = mysqli_real_escape_string($conn, $_POST['minutes']);
-    // echo $minutes;
     $hour = $_POST['hour'];
-    // echo $hours;
     $seconds = $hour*60*60 + $minutes*60;  
     $run_time = mysqli_real_escape_string($conn, $seconds);
-    // echo $run_time;
     $rating_id = mysqli_real_escape_string($conn, $_POST['rating']);
-    // echo $rating;
     $genre_ids = mysqli_real_escape_string($conn, implode("",$_POST['genre']));
-    // $genre = $_POST['genre'];
-    // foreach($genre as $genreName) {
-    //     echo $genreName;
-    //     echo("<br>");
-    // }
-    // echo $genre;
     $release_year = mysqli_real_escape_string($conn, $_POST['releaseYear']);
-    // echo $release_year;
     
     $movie_table_sql = "INSERT INTO movies ";
     $movie_table_sql .= "(title) ";
     $movie_table_sql .= "VALUES (";
     $movie_table_sql .= "'" . $title . "'";
     $movie_table_sql .= ")";
-
-    // echo $movie_table_sql;
-    // exit();
 
     $movieInserted = mysqli_query($conn, $movie_table_sql);
 
@@ -76,6 +61,4 @@ include_once 'dbMovies.inc.php';
         /* Make sure nothing else runs */
         exit();
     }
-
-    // echo "<pre>".var_dump($_POST)."</pre>";
 ?>
