@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 17, 2022 at 08:34 PM
+-- Generation Time: Aug 18, 2022 at 02:08 PM
 -- Server version: 5.7.34
 -- PHP Version: 7.4.21
 
@@ -41,7 +41,16 @@ CREATE TABLE `details` (
 --
 
 INSERT INTO `details` (`id`, `movie_id`, `genre_ids`, `rating_id`, `release_year`, `run_time`) VALUES
-(17, 22, '4,5,', 3, 2022, 6060);
+(17, 22, '4,5,', 3, 2022, 6060),
+(18, 23, '3,6,', 3, 2022, 7320),
+(19, 24, '3,2,', 4, 2021, 8880),
+(20, 25, '3,8,6,', 4, 2021, 7860),
+(21, 26, '23,15,5,', 3, 2021, 9480),
+(22, 27, '3,8,7,', 3, 2021, 8880),
+(23, 28, '3,8,2,', 3, 2021, 5820),
+(24, 29, '3,8,7,', 3, 2021, 9360),
+(25, 30, '5,1,11,', 3, 2021, 6480),
+(26, 31, '3,8,15,', 3, 2021, 7260);
 
 -- --------------------------------------------------------
 
@@ -67,7 +76,7 @@ INSERT INTO `genre` (`id`, `name`) VALUES
 (6, 'thriller'),
 (7, 'fantasy'),
 (8, 'adventure'),
-(9, 'psychological thriller'),
+(9, 'psychological '),
 (10, 'war'),
 (11, 'mystery'),
 (12, 'anime'),
@@ -82,7 +91,7 @@ INSERT INTO `genre` (`id`, `name`) VALUES
 (21, 'family'),
 (22, 'romance'),
 (23, 'biography'),
-(24, 'Dark Comedy'),
+(24, 'dark '),
 (25, 'gangster');
 
 -- --------------------------------------------------------
@@ -101,7 +110,16 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`id`, `title`) VALUES
-(22, 'Dog');
+(22, 'Dog'),
+(23, '355'),
+(24, 'Matrix Resurrections'),
+(25, 'The King\'s Man'),
+(26, 'House of Gucci'),
+(27, 'Spider-man: No Way Home'),
+(28, 'Venom: Let There Be Carnage'),
+(29, 'Eternals'),
+(30, 'Old'),
+(31, 'Snake Eyes');
 
 -- --------------------------------------------------------
 
@@ -203,7 +221,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `details`
 --
 ALTER TABLE `details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `genre`
@@ -215,7 +233,7 @@ ALTER TABLE `genre`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ratings`
