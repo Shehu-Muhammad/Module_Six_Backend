@@ -13,8 +13,10 @@ via a form
 - Published to GitHub
 ## Movie Database Project
 ## Screenshots
-![Home page Top](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/dfbb26bbb110fb3ba12155bc9de5a052a3f1ad07/Homepage_top.png)
-![Home page Bottom](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/dfbb26bbb110fb3ba12155bc9de5a052a3f1ad07/Homepage_bottom.png)
+![Home page Top](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/40e0cbde5c64968902d764b437ec2d84c7e86edb/Screen%20Shot%202022-09-20%20at%2011.47.34%20AM.png)
+
+![Home page Bottom](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/40e0cbde5c64968902d764b437ec2d84c7e86edb/Screen%20Shot%202022-09-20%20at%2011.47.47%20AM.png)
+
 ![Add Movie page](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/dfbb26bbb110fb3ba12155bc9de5a052a3f1ad07/AddMoviePage.png)
 ## Built with
 * [HTML5](https://webplatform.github.io/docs/html/html5/) - The language used to create the content
