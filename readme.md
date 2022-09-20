@@ -12,6 +12,10 @@ via a form
 - At least one single page form submission and processing
 - Published to GitHub
 ## Movie Database Project
+## Screenshots
+![Home page Top](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/dfbb26bbb110fb3ba12155bc9de5a052a3f1ad07/Homepage_top.png)
+![Home page Bottom](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/dfbb26bbb110fb3ba12155bc9de5a052a3f1ad07/Homepage_bottom.png)
+![Add Movie page](https://github.com/Shehu-Muhammad/Module_Six_Backend/blob/dfbb26bbb110fb3ba12155bc9de5a052a3f1ad07/AddMoviePage.png)
 ## Built with
 * [HTML5](https://webplatform.github.io/docs/html/html5/) - The language used to create the content
 * [CSS3](https://devdocs.io/css/) - The language used to style the content
